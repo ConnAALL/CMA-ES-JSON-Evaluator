@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn as nn
 import numpy as np
@@ -71,7 +72,7 @@ def load_inputs(input_file):
             game_end = data["GameEnd"]
             #targets = torch.tensor(data["targets"], dtype=torch.float32)
             loading = False
-            #TODO delete read file
+            os.remove(input_file)
         except:
             print("Still waiting")
             time.sleep(1)
@@ -87,7 +88,7 @@ def write_output(output_file, outputs):
 def main(input_file, output_file, input_size, output_size, population_size, max_generations):
 
     # Initialize the model
-    model = SimpleNetwork(input_size, output_size)
+    model = ConvNetwork(input_size, output_size)
 
     # Flatten model parameters
     initial_params = torch.cat([p.flatten() for p in model.parameters()]).detach().numpy()
